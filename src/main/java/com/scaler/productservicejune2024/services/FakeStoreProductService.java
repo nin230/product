@@ -6,6 +6,7 @@ import com.scaler.productservicejune2024.models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,9 +34,16 @@ private RestTemplate restTemplate;
 
     @Override
     public List<Product> getAllProducts() {
+       FakeStoreProductdto[] fakeStoreProductdtos= restTemplate.getForObject("https://fakestoreapi.com/products"
+        ,FakeStoreProductdto[].class);
 
-    RestTemplate restTemplate = new RestTemplate();
-       return null;
+       //convert list of FakeStore Dto into list of product
+       List<Product> products = new ArrayList<>();
+       for(FakeStoreProductdto fakeStoreProductdto: fakeStoreProductdtos){
+           products.add(convertFakeProductDtoToProduct(fakeStoreProductdto));
+       }
+
+       return products;
      }
      private Product convertFakeProductDtoToProduct(FakeStoreProductdto fakeStoreProductdto) {
          Product product = new Product();
