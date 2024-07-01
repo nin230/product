@@ -26,23 +26,27 @@ private RestTemplate restTemplate;
         FakeStoreProductdto fakeStoreProductdto= restTemplate.getForObject
                 ("https://fakestoreapi.com/products/" + ProductId,
                         FakeStoreProductdto.class);
-
-        Product product = new Product();
-        product.setId(fakeStoreProductdto.getId());
-        product.setTitle(fakeStoreProductdto.getTitles());
-        product.setPrice(fakeStoreProductdto.getPrice());
-
-        Category category = new Category();
-        category.setDescription(fakeStoreProductdto.getCategory());
-        product.setCategory(category);
-
-        return product;
+        return convertFakeProductDtoToProduct(fakeStoreProductdto);
     }
     //Convert fakestore dto into Product(data tranfer object)
 
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
-    }
+
+    RestTemplate restTemplate = new RestTemplate();
+       return null;
+     }
+     private Product convertFakeProductDtoToProduct(FakeStoreProductdto fakeStoreProductdto) {
+         Product product = new Product();
+         product.setId(fakeStoreProductdto.getId());
+         product.setTitle(fakeStoreProductdto.getTitles());
+         product.setPrice(fakeStoreProductdto.getPrice());
+
+         Category category = new Category();
+         category.setDescription(fakeStoreProductdto.getCategory());
+         product.setCategory(category);
+
+         return product;
+     }
 }
