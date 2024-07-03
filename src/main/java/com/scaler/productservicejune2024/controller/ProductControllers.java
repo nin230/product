@@ -3,6 +3,8 @@ package com.scaler.productservicejune2024.controller;
 import com.scaler.productservicejune2024.models.Product;
 import com.scaler.productservicejune2024.services.FakeStoreProductService;
 import com.scaler.productservicejune2024.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,8 +22,10 @@ public class ProductControllers {
 
          //http://localhost:8080/products/10
          @GetMapping("/{id}")
-        public Product getProductById(@PathVariable("id") Long id){
-             return productService.getSingleProduct(id);
+        public ResponseEntity<Product> getProductById(@PathVariable("id") Long id){
+              ResponseEntity<Product> responseEntity= new ResponseEntity<>(productService.getSingleProduct(id),
+             HttpStatus.OK);
+              return responseEntity;
         }
          @GetMapping()
         public List<Product> getAllProducts(){
