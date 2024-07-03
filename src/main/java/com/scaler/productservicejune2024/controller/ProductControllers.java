@@ -3,10 +3,7 @@ package com.scaler.productservicejune2024.controller;
 import com.scaler.productservicejune2024.models.Product;
 import com.scaler.productservicejune2024.services.FakeStoreProductService;
 import com.scaler.productservicejune2024.services.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -29,5 +26,16 @@ public class ProductControllers {
          @GetMapping()
         public List<Product> getAllProducts(){
             return  productService.getAllProducts();
+        }
+        public void deleteProduct(Long productid){
+
+        }
+           @PatchMapping("/{id}")
+        public Product updateProduct(@PathVariable ("id")Long id, @RequestBody Product product){
+            return productService.updateProduct(id,product);
+        }
+          @PutMapping("/{id}")
+        public Product replaceProduct(@PathVariable("id") Long id,Product product){
+             return null;
         }
 }

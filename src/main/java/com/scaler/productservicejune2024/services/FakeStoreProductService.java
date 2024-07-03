@@ -3,7 +3,10 @@ package com.scaler.productservicejune2024.services;
 import com.scaler.productservicejune2024.dtos.FakeStoreProductdto;
 import com.scaler.productservicejune2024.models.Category;
 import com.scaler.productservicejune2024.models.Product;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Service
-public class FakeStoreProductService implements ProductService
+public  class FakeStoreProductService implements ProductService
 {
 private RestTemplate restTemplate;
 
@@ -45,7 +48,29 @@ private RestTemplate restTemplate;
 
        return products;
      }
-     private Product convertFakeProductDtoToProduct(FakeStoreProductdto fakeStoreProductdto) {
+     //Partial update
+    @Override
+    public Product updateProduct(Long id, Product product) {
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(product, FakeStoreProductdto.class);
+        HttpMessageConverterExtractor<FakeStoreProductdto> responseExtractor = new HttpMessageConverterExtractor(FakeStoreProductdto.class,
+                restTemplate.getMessageConverters());
+         FakeStoreProductdto response =restTemplate.execute("https://fakestoreapi.com/products" + id,
+                HttpMethod.PATCH, requestCallback, responseExtractor);
+        return convertFakeProductDtoToProduct(response);
+    }
+
+    @Override
+    public Product replaceProduct(Long id, Product product) {
+        return null;
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+
+    }
+
+
+    private Product convertFakeProductDtoToProduct(FakeStoreProductdto fakeStoreProductdto) {
          Product product = new Product();
          product.setId(fakeStoreProductdto.getId());
          product.setTitle(fakeStoreProductdto.getTitles());
