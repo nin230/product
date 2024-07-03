@@ -26,11 +26,14 @@ private RestTemplate restTemplate;
      }
     @Override
     public Product getSingleProduct(Long ProductId) {
+
+         throw new ArithmeticException();
+         //throw new RuntimeException("Something went wrong");
         //call Fakestore  to fetch product with given id ==>HTTP call
-        FakeStoreProductdto fakeStoreProductdto= restTemplate.getForObject
-                ("https://fakestoreapi.com/products/" + ProductId,
-                        FakeStoreProductdto.class);
-        return convertFakeProductDtoToProduct(fakeStoreProductdto);
+//        FakeStoreProductdto fakeStoreProductdto= restTemplate.getForObject
+//                ("https://fakestoreapi.com/products/" + ProductId,
+//                        FakeStoreProductdto.class);
+        //return convertFakeProductDtoToProduct(fakeStoreProductdto);
     }
     //Convert fakestore dto into Product(data tranfer object)
 
