@@ -52,4 +52,15 @@ public class ProductControllers {
         public Product replaceProduct(@PathVariable("id") Long id,Product product){
              return null;
         }
+
+//        @ExceptionHandler(ArithmeticException.class)
+//            public ResponseEntity<String> handleArithmeticException(){
+//            ResponseEntity<String> response = new ResponseEntity<>
+//                    ("ArrayIndex out of bound Exception has occured happened inside product controller" ,
+//                            HttpStatus.NOT_FOUND
+//
+//                    );
+//            return response;
+//
+//        }
 }

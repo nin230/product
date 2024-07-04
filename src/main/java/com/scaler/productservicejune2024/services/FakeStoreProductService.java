@@ -1,8 +1,10 @@
 package com.scaler.productservicejune2024.services;
 
+import com.scaler.productservicejune2024.CustomException.ProductNotFoundException;
 import com.scaler.productservicejune2024.dtos.FakeStoreProductdto;
 import com.scaler.productservicejune2024.models.Category;
 import com.scaler.productservicejune2024.models.Product;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -24,16 +26,21 @@ private RestTemplate restTemplate;
      public FakeStoreProductService(RestTemplate restTemplate){
          this.restTemplate = restTemplate;
      }
+    @SneakyThrows
     @Override
     public Product getSingleProduct(Long ProductId) {
 
-         throw new ArithmeticException();
+         //throw new ArithmeticException();
          //throw new RuntimeException("Something went wrong");
         //call Fakestore  to fetch product with given id ==>HTTP call
-//        FakeStoreProductdto fakeStoreProductdto= restTemplate.getForObject
-//                ("https://fakestoreapi.com/products/" + ProductId,
-//                        FakeStoreProductdto.class);
-        //return convertFakeProductDtoToProduct(fakeStoreProductdto);
+        FakeStoreProductdto fakeStoreProductdto= restTemplate.getForObject
+                ("https://fakestoreapi.com/products/" + ProductId,
+                     FakeStoreProductdto.class);
+
+        if(fakeStoreProductdto==null){
+            throw new ProductNotFoundException("Product with id "+ProductId+" doesn't exist");
+        }
+        return convertFakeProductDtoToProduct(fakeStoreProductdto);
     }
     //Convert fakestore dto into Product(data tranfer object)
 
