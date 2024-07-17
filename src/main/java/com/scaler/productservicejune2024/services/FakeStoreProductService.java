@@ -18,7 +18,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Service("FakeStoreProductService")
+@Service("fakeStoreProductService")
 public  class FakeStoreProductService implements ProductService
 {
 private RestTemplate restTemplate;
