@@ -1,8 +1,10 @@
 package com.scaler.productservicejune2024.controller;
 
+import com.scaler.productservicejune2024.CustomException.ProductNotFoundException;
 import com.scaler.productservicejune2024.models.Product;
 import com.scaler.productservicejune2024.services.FakeStoreProductService;
 import com.scaler.productservicejune2024.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +17,14 @@ import java.util.List;
 public class ProductControllers {
      private ProductService productService;
 
-        public ProductControllers(ProductService productService) {
+        public ProductControllers(@Qualifier("selfProductService") ProductService productService) {
             this.productService = productService;
         }
 
 
          //http://localhost:8080/products/10
          @GetMapping("/{id}")
-        public ResponseEntity<Product> getProductById(@PathVariable("id") Long id){
+        public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
                //throw new RuntimeException("Something went wrong");
 //             ResponseEntity<Product> responseEntity= null ;
 //             try {
@@ -63,4 +65,8 @@ public class ProductControllers {
 //            return response;
 //
 //        }
+    @PostMapping
+    public Product addNewProduct(@RequestBody Product product){
+                return null;
+    }
 }

@@ -18,7 +18,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Service
+@Service("FakeStoreProductService")
 public  class FakeStoreProductService implements ProductService
 {
 private RestTemplate restTemplate;
@@ -77,6 +77,11 @@ private RestTemplate restTemplate;
     @Override
     public void deleteProduct(Long id) {
 
+    }
+
+    @Override
+    public Product addNewProduct(Product product) {
+        return null;
     }
 
 
