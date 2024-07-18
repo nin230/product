@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.client.RestTemplate;
 //import
 import java.util.List;
 
@@ -43,11 +43,13 @@ public class ProductControllers {
         public List<Product> getAllProducts(){
             return  productService.getAllProducts();
         }
-        public void deleteProduct(Long productid){
 
-        }
+          @DeleteMapping("/{id}")
+          public void deleteAllProducts(@PathVariable("id") Long productId){
+            productService.deleteProduct(productId);
+          }
            @PatchMapping("/{id}")
-        public Product updateProduct(@PathVariable ("id")Long id, @RequestBody Product product){
+        public Product updateProduct(@PathVariable ("id")Long id, @RequestBody Product product) throws ProductNotFoundException{
             return productService.updateProduct(id,product);
         }
           @PutMapping("/{id}")
@@ -67,6 +69,6 @@ public class ProductControllers {
 //        }
     @PostMapping
     public Product addNewProduct(@RequestBody Product product){
-                return null;
+                return productService.addNewProduct(product);
     }
 }
